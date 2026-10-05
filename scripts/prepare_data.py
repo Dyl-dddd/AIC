@@ -504,7 +504,8 @@ def main() -> None:
             cv2.setNumThreads(1)
             with ThreadPoolExecutor(max_workers=args.workers) as executor:
                 processed = executor.map(
-                    lambda record: process_record(record, split, args, class_names), split_records_list
+                    lambda record, split=split: process_record(record, split, args, class_names),
+                    split_records_list,
                 )
                 for items, counts in processed:
                     metadata.extend(items)
