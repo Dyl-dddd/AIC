@@ -11,8 +11,6 @@ import platform
 import sys
 from typing import Any
 
-import torch
-import ultralytics
 import yaml
 
 
@@ -60,6 +58,12 @@ def sha256_file(path: str | Path) -> str | None:
 
 
 def platform_manifest(config: dict[str, Any]) -> dict[str, Any]:
+    # Imported lazily so that the pure-Python helpers in this module
+    # (sha256_file, load_yaml_section, apply_profile_defaults, ...) stay usable
+    # on machines without a full PyTorch/Ultralytics installation.
+    import torch
+    import ultralytics
+
     gpu = []
     if torch.cuda.is_available():
         for index in range(torch.cuda.device_count()):
