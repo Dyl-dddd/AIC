@@ -40,6 +40,8 @@
 | pytest 失败 | 10（全部因缺 torch 环境） | 6（参见说明） |
 | 收集错误 | 21 | 18 |
 
+> 口径提示（复核者 SpikeBot 005 在 PR 审查中精确指出）：修复后的 45 passed / 18 errors 依赖 **Pillow** 在场（`test_extract_official_data.py` / `test_extract_test_data.py` 顶层 `from PIL import Image`）；若环境缺 Pillow，则为 39 passed / 20 errors。
+
 - 修复后仍失败的 6 项全部在 `tests/test_governance.py`，其中 3 项本身需要真实 `torch`（构造 optimizer/BatchNorm/tensor），在无 torch 环境失败是正确行为；另 3 项依赖 `scripts/train.py` 的导入链（见 4.1 建议）。
 - 收集错误（18 项）全部源于测试模块顶层导入链需要 `torch`/`ultralytics`/`xgboost`；其中 3 项由本次修复解锁（`test_ensemble_v6`、`test_final_submission_cache`、`test_varifocal_submission_rescore`），其余属于"训练/推理集成测试"，需完整 GPU 环境。
 
@@ -90,7 +92,8 @@
 # 1) 全量编译检查
 python -c "import compileall,sys; sys.exit(0 if compileall.compile_dir(r'<repo>', quiet=1) else 1)"
 
-# 2) 测试套件（轻量环境 = 仅 numpy/cv2/yaml/pandas/pytest）
+# 2) 测试套件（轻量环境 = numpy/cv2/yaml/pandas/pytest/Pillow；
+#    test_extract_* 需要 Pillow，缺它时通过数 39、收集错误 20）
 python -m pytest tests/ -q --continue-on-collection-errors
 
 # 3) 网格几何验证（需将官方复赛图解压至 data/semifinal/test）
