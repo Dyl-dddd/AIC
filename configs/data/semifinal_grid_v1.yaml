@@ -1,0 +1,23 @@
+# Reproduces the 1387x1516 2x3 crop construction observed in the semifinal set.
+# The frozen manifest keeps model selection leakage-safe; final_holdout is not used.
+prepare:
+  source: data/official/train
+  output: data/semifinal_yolo_grid_v1
+  frozen_splits: data/official_v2_20260831b/splits.json
+  classes: official
+  tile_layout: semifinal_grid
+  tile_width: 1387
+  tile_height: 1516
+  grid_rows: 2
+  grid_cols: 3
+  tile_size: 1024
+  overlap: 0.25
+  negative_ratio: 0.35
+  rare_repeat_cap: 3.0
+  min_visibility: 0.35
+  seed: 42
+  workers: 2
+  deblur: false
+  clahe: false
+  view_mode: both
+  global_size: 1024

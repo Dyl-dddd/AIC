@@ -1,0 +1,45 @@
+# Fixed-compute control arm: continue the protected Model A with stock BCE.
+train:
+  data: data/semifinal_yolo_balanced_v3/steel_defect.yaml
+  model: yolo11s.pt
+  pretrained: none
+  loss: bce
+  project: runs/semifinal
+  name: quality_v1_bce_control
+  epochs: 8
+  imgsz: 1024
+  batch: 8
+  nbs: 64
+  workers: 0
+  device: '0'
+  optimizer: AdamW
+  lr0: 0.00001
+  lrf: 0.10
+  warmup_epochs: 0.5
+  warmup_bias_lr: 0.0
+  cos_lr: true
+  weight_decay: 0.0005
+  patience: 0
+  mosaic: 0.0
+  mixup: 0.0
+  close_mosaic: 0
+  degrees: 0.0
+  translate: 0.01
+  scale: 0.03
+  fliplr: 0.5
+  flipud: 0.5
+  hsv_h: 0.0
+  hsv_s: 0.0
+  hsv_v: 0.08
+  erasing: 0.0
+  cache: false
+  amp: true
+  deterministic: true
+  freeze_bn: false
+  val: false
+  defer_validation: true
+  plots: false
+  save_period: 2
+  seed: 20260928
+  exist_ok: true
+

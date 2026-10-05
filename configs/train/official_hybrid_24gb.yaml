@@ -1,0 +1,23 @@
+train:
+  data: /workspace/data/official_yolo_hybrid/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: yolo11s.pt
+  loss: focal
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  epochs: 150
+  imgsz: 1024
+  batch: 6
+  device: "0"
+  workers: 8
+  project: runs/steel
+  name: official_hybrid_p2_focal
+  # Avoid a very large uncompressed .npy cache for 1024px hybrid views.
+  cache: false
+  patience: 35
+  optimizer: AdamW
+  lr0: 0.002
+  lrf: 0.01
+  close_mosaic: 15
+  deterministic: true
+  save_period: 10

@@ -1,0 +1,24 @@
+# Leakage-safe 1024 training set matched to the semifinal full-image/crop mixture.
+prepare:
+  source: data/official/train
+  output: data/semifinal_yolo_balanced_v3
+  frozen_splits: data/official_v2_20260831b/splits.json
+  classes: official
+  tile_layout: semifinal_grid
+  tile_width: 1387
+  tile_height: 1516
+  grid_rows: 2
+  grid_cols: 3
+  negative_ratio: 0.35
+  rare_repeat_cap: 3.0
+  min_visibility: 0.35
+  seed: 42
+  # The cloud container exposes a small /dev/shm. Keep preparation single-process
+  # so the same package is safe on that host as well as during YOLO training.
+  workers: 0
+  deblur: false
+  clahe: false
+  view_mode: both
+  global_size: 1024
+  global_repeat: 3
+

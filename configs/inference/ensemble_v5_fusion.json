@@ -1,0 +1,29 @@
+{
+  "purpose": "Frozen-development Model A/B fusion selected on 2026-09-27",
+  "model_a_sha256": "d69b236a91599f850b495d7b2e60d87c0c4905713398baca21d18e564cc42a4d",
+  "model_b_sha256": "02f1f09b80addd462e8781d08c27b744b0175b4ab04dcc2df5191892c3a23090",
+  "per_model_nms_iou": 0.68,
+  "edge_penalty": 0.5,
+  "model_b_score_scale": 0.35,
+  "cross_model_nms_iou": 0.72,
+  "generation_conf": 0.00001,
+  "merge_conf": 0.0001,
+  "class_router": {
+    "jieba": {"source": "fusion", "threshold": 0.0001},
+    "zonglie": {"source": "model_a", "threshold": 0.0002},
+    "jiaza": {"source": "model_b", "threshold": 0.002},
+    "yiwuyaru": {"source": "fusion", "threshold": 0.0007},
+    "huashang": {"source": "model_a", "threshold": 0.00015},
+    "mamianmakeng": {"source": "fusion", "threshold": 0.00015},
+    "yanghuatiepi": {"source": "fusion", "threshold": 0.0003},
+    "gunyin": {"source": "model_b", "threshold": 0.4}
+  },
+  "development_proxy": {
+    "model_a_weighted": 66.63952115625935,
+    "global_fusion_original": 68.34617726527127,
+    "global_fusion_grid_crops": 68.21574899659251,
+    "global_fusion_weighted": 68.29652183303315,
+    "router_weighted_optimistic": 68.40899188207756
+  },
+  "warning": "Development-set calibration only. Scores are not official Test results. Confirm competition rules before submitting a multi-model result."
+}

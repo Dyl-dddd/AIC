@@ -1,0 +1,28 @@
+# Two-epoch full-data pipeline pilot, not a converged competition result.
+train:
+  data: D:/全球人工智能算法/data/official_yolo_hybrid_local/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: yolo11s.pt
+  loss: focal
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  epochs: 2
+  imgsz: 1024
+  batch: 1
+  device: "0"
+  workers: 0
+  project: runs/steel
+  name: official_hybrid_local_2ep_20260831
+  cache: false
+  patience: 0
+  optimizer: AdamW
+  lr0: 0.002
+  lrf: 0.01
+  warmup_epochs: 0.25
+  close_mosaic: 0
+  deterministic: true
+  val: true
+  plots: true
+  save_period: 1
+  exist_ok: false
+  seed: 42

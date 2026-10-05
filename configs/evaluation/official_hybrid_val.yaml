@@ -1,0 +1,25 @@
+evaluate:
+  weights: runs/steel/official_hybrid_p2_focal/weights/best.pt
+  source: /workspace/data/official/train
+  split_manifest: /workspace/data/official_yolo_hybrid/metadata/splits.json
+  split: val
+  output: runs/evaluation/official_hybrid_val
+  tile_size: 1024
+  overlap: 0.25
+  imgsz: 1024
+  batch: 8
+  conf: 0.005
+  iou: 0.55
+  local_iou: 0.70
+  operating_threshold: 0.05
+  device: "0"
+  deblur: false
+  deblur_threshold: 85.0
+  clahe: false
+  edge_margin: 12
+  edge_penalty: 1.0
+  global_pass: true
+  merge: nms
+  max_det: 2000
+  beta: 2.0
+  tune_thresholds: false

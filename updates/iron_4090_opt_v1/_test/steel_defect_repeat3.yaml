@@ -1,0 +1,15 @@
+path: D:/全球人工智能算法/data/official_yolo_hybrid_v2
+train: D:/全球人工智能算法/updates/iron_4090_opt_v1/_test/rare_repeat_train_cap3.txt
+val: images/dev
+nc: 9
+names:
+  0: jieba
+  1: zonglie
+  2: qilie
+  3: jiaza
+  4: yiwuyaru
+  5: huashang
+  6: mamianmakeng
+  7: yanghuatiepi
+  8: gunyin
+channels: 3

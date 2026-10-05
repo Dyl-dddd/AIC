@@ -1,0 +1,21 @@
+defaults:
+  config: configs/train/official_finetune_24gb.yaml
+  project: runs/ablation
+
+experiments:
+  - name: a2_bce_repeat1
+    data: /workspace/data/official_yolo_clean/steel_defect.yaml
+    loss: bce
+  - name: a2_focal_repeat1
+    data: /workspace/data/official_yolo_clean/steel_defect.yaml
+    loss: focal
+    focal_gamma: 2.0
+    focal_alpha: 0.25
+  - name: a2_bce_repeat3
+    data: /workspace/data/official_yolo_repeat3/steel_defect.yaml
+    loss: bce
+  - name: a2_focal_repeat3
+    data: /workspace/data/official_yolo_repeat3/steel_defect.yaml
+    loss: focal
+    focal_gamma: 2.0
+    focal_alpha: 0.25

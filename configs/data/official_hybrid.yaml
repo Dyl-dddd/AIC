@@ -1,0 +1,21 @@
+# Recommended starting profile after auditing the real 4096x3000 dataset.
+# Tiles preserve tiny defects; a downscaled global view teaches full-height cracks.
+prepare:
+  source: /workspace/data/official/train
+  output: /workspace/data/official_yolo_hybrid
+  classes: official
+  tile_size: 1024
+  overlap: 0.25
+  val_ratio: 0.15
+  calibration_ratio: 0.10
+  split_trials: 6000
+  negative_ratio: 0.35
+  rare_repeat_cap: 3.0
+  min_visibility: 0.35
+  seed: 42
+  workers: 8
+  deblur: false
+  deblur_threshold: 85.0
+  clahe: false
+  view_mode: both
+  global_size: 1024

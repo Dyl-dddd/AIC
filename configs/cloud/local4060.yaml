@@ -1,0 +1,46 @@
+# Conservative local profile for an 8 GiB RTX 4060 Laptop GPU.
+# The baseline and long stages must use the same recipe.
+train:
+  data: data/official_yolo_hybrid_v2/steel_defect.yaml
+  model: yolo11s.pt
+  pretrained: none
+  loss: bce
+  project: runs/local4060
+  name: stock4060_baseline
+  epochs: 5
+  imgsz: 1024
+  batch: 1
+  nbs: 16
+  workers: 0
+  device: '0'
+  optimizer: AdamW
+  lr0: 0.0001
+  lrf: 0.1
+  warmup_epochs: 0.5
+  warmup_bias_lr: 0.0
+  cos_lr: true
+  weight_decay: 0.0005
+  patience: 0
+  mosaic: 0.0
+  mixup: 0.0
+  close_mosaic: 0
+  degrees: 0.0
+  translate: 0.0
+  scale: 0.0
+  fliplr: 0.5
+  flipud: 0.5
+  hsv_h: 0.0
+  hsv_s: 0.0
+  hsv_v: 0.1
+  erasing: 0.0
+  cache: false
+  amp: false
+  freeze_bn: false
+  # Original-image evaluation is run by local_cloud.py after training. Avoid
+  # Ultralytics' accumulating tiled validator, which exceeded 16 GiB host RAM.
+  val: false
+  defer_validation: true
+  plots: false
+  save_period: 1
+  seed: 42
+  exist_ok: false

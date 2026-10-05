@@ -1,0 +1,27 @@
+{
+  "purpose": "Frozen-dev weighted-score calibration for full_retrain_v3_fix1 epoch0",
+  "weights_sha256": "d69b236a91599f850b495d7b2e60d87c0c4905713398baca21d18e564cc42a4d",
+  "merge_iou": 0.68,
+  "edge_penalty": 0.5,
+  "generation_conf": 0.00001,
+  "thresholds": {
+    "jieba": 0.0001,
+    "zonglie": 0.0002896533854368428,
+    "jiaza": 0.005764376831834507,
+    "yiwuyaru": 0.0001232457130081145,
+    "huashang": 0.00018894056741043704,
+    "mamianmakeng": 0.00017911462207726223,
+    "yanghuatiepi": 0.0002745898214289673,
+    "gunyin": 0.4
+  },
+  "excluded_categories": [
+    "qilie"
+  ],
+  "development_proxy": {
+    "score_definition": "20*P_micro + 60*R_micro + 20*mAP50_macro",
+    "original": 67.23403774325773,
+    "grid_crops": 65.93186411560447,
+    "weighted": 66.73828636217145,
+    "warning": "Frozen development estimate, not an official Test score."
+  }
+}

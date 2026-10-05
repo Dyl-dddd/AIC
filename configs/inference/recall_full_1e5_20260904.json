@@ -1,0 +1,41 @@
+{
+  "name": "recall_full_1e5_20260904",
+  "purpose": "single-variable official threshold ablation after score 91.95",
+  "control_candidate": "recall97_candidate_20260904",
+  "changed_variable": {
+    "candidate_score_threshold_before": 0.000013,
+    "candidate_score_threshold_after": 0.00001
+  },
+  "weights": "runs/local4060/baseline4060_full65_b1_noval_20260902/weights/best_original.pt",
+  "weights_sha256": "f47b10edafee66d05b6c051606651b1e6264884eacd3a42f51b98d8c3fc2430d",
+  "candidate_caches": [
+    "runs/optimization/recall98_test/plain_candidates.jsonl.gz",
+    "runs/optimization/recall98_test/tta_candidates.jsonl.gz"
+  ],
+  "action_file": "runs/optimization/recall98_nms050_milp/action_report.json",
+  "extra_actions": [
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, -0.1, 0.0],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.1, 0.0],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.0, -0.1],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.0, 0.1]
+  ],
+  "pre_nms_iou": 0.5,
+  "final_nms_iou": 0.0,
+  "score_floor": 0.001,
+  "rounding": "nearest",
+  "frozen_dev_result": {
+    "true_positives": 610,
+    "ground_truth": 622,
+    "recall": 0.9807073954983923,
+    "proxy_score": 98.07073954983923,
+    "predictions": 6234451
+  },
+  "official_test_artifact": {
+    "images": 669,
+    "predictions": 9146920,
+    "submission_bytes": 1100238187,
+    "submission_sha256": "9c23ebdbd0f6e47e2bafb9fab62b745e30d59cc9c512b9a1e813c03642a891ba",
+    "zip_bytes": 84570772,
+    "zip_sha256": "d83893d570681750134a4542c0849d8b2a166747cc804f812f6a1ff734ba0148"
+  }
+}

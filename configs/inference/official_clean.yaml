@@ -1,0 +1,21 @@
+infer:
+  weights: runs/steel/official_p2_focal/weights/best.pt
+  source: /workspace/data/official/test
+  output: submission.json
+  tile_size: 1024
+  overlap: 0.25
+  imgsz: 1024
+  batch: 8
+  conf: 0.01
+  iou: 0.55
+  local_iou: 0.70
+  device: "0"
+  deblur: false
+  deblur_threshold: 85.0
+  clahe: false
+  edge_margin: 12
+  edge_penalty: 1.0
+  global_pass: false
+  merge: nms
+  max_det: 2000
+

@@ -1,0 +1,21 @@
+{
+  "purpose": "Lower-count dual-native-TTA source-aware consensus fallback",
+  "model_a_sha256": "d69b236a91599f850b495d7b2e60d87c0c4905713398baca21d18e564cc42a4d",
+  "model_b_sha256": "02f1f09b80addd462e8781d08c27b744b0175b4ab04dcc2df5191892c3a23090",
+  "per_model_nms_iou": 0.68,
+  "edge_penalty": 0.5,
+  "merge_conf": 0.0001,
+  "model_b_score_scale": 0.35,
+  "match_iou": 0.50,
+  "consensus_boost": 1.10,
+  "coordinate_mode": "vote",
+  "unmatched_b_factor": 0.50,
+  "final_nms_iou": 0.72,
+  "development_proxy": {
+    "old_v6_weighted": 68.36661302454482,
+    "tta_weighted": 68.7407553695112,
+    "tta_original": 68.6287003981065,
+    "tta_grid_crops": 68.9230314563296
+  },
+  "warning": "Development calibration only. Use only as a fallback after the primary result is known."
+}

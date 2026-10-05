@@ -1,0 +1,32 @@
+{
+  "dataset_root": "D:/全球人工智能算法/data/official_yolo_hybrid_v2",
+  "base_training_views": 9365,
+  "repeated_views": 938,
+  "effective_training_views": 10303,
+  "growth_fraction": 0.1001601708489055,
+  "repeat_cap": 3.0,
+  "class_tile_presence": {
+    "jieba": 1078,
+    "zonglie": 627,
+    "qilie": 62,
+    "jiaza": 219,
+    "yiwuyaru": 716,
+    "huashang": 111,
+    "mamianmakeng": 723,
+    "yanghuatiepi": 581,
+    "gunyin": 373
+  },
+  "extra_presence_by_class": {
+    "jieba": 95,
+    "zonglie": 13,
+    "qilie": 124,
+    "jiaza": 219,
+    "yiwuyaru": 10,
+    "huashang": 222,
+    "mamianmakeng": 3,
+    "yanghuatiepi": 2,
+    "gunyin": 373
+  },
+  "list": "D:/全球人工智能算法/updates/iron_4090_opt_v1/_test/rare_repeat_train_cap3.txt",
+  "yaml": "D:/全球人工智能算法/updates/iron_4090_opt_v1/_test/steel_defect_repeat3.yaml"
+}

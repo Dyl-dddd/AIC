@@ -1,0 +1,14 @@
+data: D:/BaiduNetdiskDownload/基于大模型的多模态视觉理解与推理-示例数据/sample.json
+output: runs/multimodal_grounding/baseline
+img_size: 384
+batch_size: 8
+epochs: 50
+lr: 0.0003
+weight_decay: 0.0001
+val_ratio: 0.2
+max_tokens: 32
+vocab_size: 8192
+text_dim: 128
+width: 48
+l1_weight: 1.0
+giou_weight: 1.0

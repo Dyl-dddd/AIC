@@ -1,0 +1,16 @@
+train:
+  data: /workspace/data/official_yolo_clean/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: yolo11s.pt
+  loss: bce
+  epochs: 100
+  imgsz: 1024
+  batch: 6
+  device: "0"
+  workers: 8
+  project: runs/architecture_screen
+  name: placeholder
+  cache: disk
+  patience: 25
+  deterministic: true
+  seed: 42

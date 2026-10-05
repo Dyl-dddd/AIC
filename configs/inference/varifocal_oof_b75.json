@@ -1,0 +1,64 @@
+{
+  "purpose": "Frozen Varifocal OOF score transfer onto the V7 primary submission",
+  "status": "experimental_not_release_gated",
+  "model_a_sha256": "d69b236a91599f850b495d7b2e60d87c0c4905713398baca21d18e564cc42a4d",
+  "model_b_sha256": "02f1f09b80addd462e8781d08c27b744b0175b4ab04dcc2df5191892c3a23090",
+  "varifocal_sha256": "4228f473d7618275e6c7efea6ad28118a6da2d2a2c9d8422298fd0078430a4f6",
+  "source_analysis_sha256": "035f2e730ae8f81e860cb12e44df23aa1d93c8db4c1d7e3d7e87cd5d1f7cf0ac",
+  "protocol": {
+    "folds": 5,
+    "match_floor": 0.5,
+    "feature_set": "base_vf",
+    "membership_preserving": true,
+    "geometry_preserving": true
+  },
+  "blend": 0.75,
+  "profile": {
+    "intercept": -0.7445960936318475,
+    "samples": 277958,
+    "positives": 5120,
+    "names": [
+      "log_base_score",
+      "vf_present",
+      "vf_iou",
+      "log_vf_score",
+      "vf_log_advantage"
+    ],
+    "mean": [
+      -8.191316068832329,
+      0.6450722771066132,
+      0.4727855956356101,
+      -13.1888450093992,
+      -4.997528940566154
+    ],
+    "scale": [
+      1.9894760493172492,
+      0.4784914151935914,
+      0.36936899297471354,
+      10.85062604592322,
+      10.19850076357
+    ],
+    "coefficients": [
+      0.5383767845306447,
+      0.15432562814768955,
+      0.0,
+      0.38844531207456495,
+      0.30825973102936716
+    ]
+  },
+  "development_oof": {
+    "v7_weighted": 68.85956232360215,
+    "rescored_weighted": 69.00435500329723,
+    "weighted_delta": 0.1447926796950867,
+    "original_delta": 0.13003466893594862,
+    "grid_crops_delta": 0.16879904359666997,
+    "original_map50_delta": 0.006501733446797053,
+    "grid_crops_map50_delta": 0.008439952193167502
+  },
+  "governance": {
+    "preregistered_release_threshold": 0.2,
+    "release_threshold_passed": false,
+    "official_score_known": false,
+    "recommended_use": "spare leaderboard slot only; preserve the official V7 score"
+  }
+}

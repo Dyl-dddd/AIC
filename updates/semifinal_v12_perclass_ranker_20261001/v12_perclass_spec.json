@@ -1,0 +1,45 @@
+{
+  "feature_names": [
+    "log_base_score",
+    "vf_present",
+    "vf_iou",
+    "log_vf_score",
+    "vf_log_advantage",
+    "p1_present",
+    "p1_iou",
+    "log_p1_score",
+    "p1_log_advantage",
+    "p2_present",
+    "p2_iou",
+    "log_p2_score",
+    "p2_log_advantage",
+    "log_width_ratio",
+    "log_height_ratio",
+    "log_area_ratio",
+    "log_aspect",
+    "center_x",
+    "center_y",
+    "edge_distance",
+    "image_rank",
+    "image_class_rank",
+    "log_image_count",
+    "log_image_class_count"
+  ],
+  "classes": {
+    "jieba": {"beta": 0.875, "model": "jieba.ubj", "sha256": "d9c4d180dce0004034e78243e00b0f95db06007f710b27a9b617eac856fb1d05"},
+    "zonglie": {"beta": 0.75, "model": "zonglie.ubj", "sha256": "90a00878b61f2c3fbd1a4a78762f91fcb39299165128d0149319467ba2062188"},
+    "jiaza": {"beta": 0.5, "model": "jiaza.ubj", "sha256": "019170de30284fda713c4fe4c811b35fe8e3c4155fad9fdb1a64b73f7abb34dd"},
+    "yiwuyaru": {"beta": 0.8, "model": "yiwuyaru.ubj", "sha256": "8088de4ae5a7ed46ac85c1889bc7be6667dac4173f99fca02f7709732b983546"},
+    "huashang": {"beta": 0.75, "model": "huashang.ubj", "sha256": "759d6915b643cf46d748b1e9cb9e6fb34bed518fc6749c01ab0ca7fb903b3a66"},
+    "mamianmakeng": {"beta": 0.75, "model": "mamianmakeng.ubj", "sha256": "9b70d46fb1a3617da72849c2b30c710f9a9164c92f8eea245853205defb79bc5"},
+    "yanghuatiepi": {"beta": 0.5, "model": "yanghuatiepi.ubj", "sha256": "04d0579383ae2e198e81f86d9b5d7e51495aa68a4f2c43ef9785e3b9a723f111"},
+    "gunyin": {"beta": 0.4, "model": "gunyin.ubj", "sha256": "6dc1a1d07bf565e2e88fe227f27e9504c1e6e334b9635db07d2f01674e5f9e56"}
+  },
+  "strict_group_oof": {
+    "folds": 5,
+    "weighted_delta_vs_v7": 0.6508259848003998,
+    "original_delta": 0.6214837098429484,
+    "grid_crops_delta": 0.6985560853978541,
+    "membership_and_geometry_frozen": true
+  }
+}

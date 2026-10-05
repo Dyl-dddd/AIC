@@ -1,0 +1,19 @@
+prepare:
+  source: D:/全球人工智能算法/data/gc10_raw
+  output: D:/全球人工智能算法/data/gc10_yolo_2ep
+  classes: auto
+  tile_size: 768
+  overlap: 0.25
+  val_ratio: 0.20
+  calibration_ratio: 0.0
+  split_trials: 4000
+  negative_ratio: 0.25
+  rare_repeat_cap: 1.0
+  min_visibility: 0.35
+  seed: 42
+  workers: 4
+  deblur: false
+  clahe: false
+  view_mode: global
+  global_size: 768
+

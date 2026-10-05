@@ -1,0 +1,21 @@
+infer:
+  weights: runs/semifinal/grid2x3_ft30_b22/weights/best.pt
+  source: data/semifinal/Test
+  output: submissions/semifinal_grid_v1/submission.json
+  tile_size: 1024
+  overlap: 0.25
+  imgsz: 1024
+  batch: 1
+  conf: 0.00001
+  iou: 0.55
+  local_iou: 0.70
+  device: '0'
+  half: false
+  tta: false
+  deblur: false
+  clahe: false
+  edge_margin: 12
+  edge_penalty: 1.0
+  global_pass: true
+  merge: nms
+  max_det: 2000

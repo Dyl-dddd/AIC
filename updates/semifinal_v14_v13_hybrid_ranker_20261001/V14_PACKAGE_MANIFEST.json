@@ -1,0 +1,15 @@
+{
+  "generate_v14_v13_hybrid_ranker_submission.py": "5801d97e3333ef0ceebbb2635770f0fcb5e02d13e983a521bff4ff710dbbf586",
+  "models/v12_gunyin.ubj": "6dc1a1d07bf565e2e88fe227f27e9504c1e6e334b9635db07d2f01674e5f9e56",
+  "models/v12_huashang.ubj": "759d6915b643cf46d748b1e9cb9e6fb34bed518fc6749c01ab0ca7fb903b3a66",
+  "models/v12_yanghuatiepi.ubj": "04d0579383ae2e198e81f86d9b5d7e51495aa68a4f2c43ef9785e3b9a723f111",
+  "models/v12_yiwuyaru.ubj": "8088de4ae5a7ed46ac85c1889bc7be6667dac4173f99fca02f7709732b983546",
+  "models/v12_zonglie.ubj": "90a00878b61f2c3fbd1a4a78762f91fcb39299165128d0149319467ba2062188",
+  "models/v14_jiaza.ubj": "ef2d2ec56cb3af89e97d9c6f644d3b8a43e67393bb92bafb392498ef24853189",
+  "models/v14_jieba.ubj": "43951362e6675b7d6982a10a00188b40bd947c2b2c59f94780a2eaa916d3a617",
+  "models/v14_mamianmakeng.ubj": "85f27edfd9ade66785f4167e1d6b5b27cfc7c54568cdaba4e6965c2aa2af6813",
+  "README_V14_V13_HYBRID_RANKER_4090.md": "d65f88eff80740f412b2f45733d29eca4c4d2b3fb7b23d398c9ccce7d3d0e82a",
+  "requirements-v14.txt": "75178cd05ad5619d74d66c11a4f2917f18544207814d910fac0a698969c5d731",
+  "tests/test_v14_v13_hybrid_package.py": "8844a7a925c1321cd7c7cc615876324aa194e9aeed9a1323a1b771b1ddf94763",
+  "v14_hybrid_spec.json": "df9c5d90790031086ac51eb5a68cf70d504493cd064015db1fd408d52235c2c1"
+}

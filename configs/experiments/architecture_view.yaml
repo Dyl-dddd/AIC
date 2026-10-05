@@ -1,0 +1,18 @@
+defaults:
+  config: configs/train/architecture_screen_24gb.yaml
+  project: runs/architecture_view
+  loss: bce
+
+experiments:
+  - name: a1_stock_full
+    model: yolo11s.yaml
+    data: /workspace/data/official_yolo_full_clean/steel_defect.yaml
+  - name: a1_p2_full
+    model: configs/yolo11s-p2.yaml
+    data: /workspace/data/official_yolo_full_clean/steel_defect.yaml
+  - name: a1_stock_tiles
+    model: yolo11s.yaml
+    data: /workspace/data/official_yolo_clean/steel_defect.yaml
+  - name: a1_p2_tiles
+    model: configs/yolo11s-p2.yaml
+    data: /workspace/data/official_yolo_clean/steel_defect.yaml

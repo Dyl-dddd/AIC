@@ -1,0 +1,13 @@
+{
+  "support_iou": 0.6,
+  "score_blend": 0.0,
+  "metadata": {
+    "method": "SAFE-R2",
+    "selected_from_group_oof": "",
+    "deployment_allowed": false,
+    "gate": "STOP",
+    "training_view": "original",
+    "test_labels_used": false,
+    "note": "Fail-closed placeholder. Replace only with an immutable group-OOF profile whose deployment gate passed before final-lockbox evaluation."
+  }
+}

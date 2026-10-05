@@ -1,0 +1,17 @@
+{
+  "archive": "D:\\全球人工智能算法\\updates\\iron_4090_opt_v1\\iron_4090_opt_v1_1_hotfix_code_only.zip",
+  "sha256": "be6d0ab452d0434ee41dca59612d6848311e64aedee0e3165f3f063d631c1e5b",
+  "size_bytes": 9587,
+  "entries": [
+    "OPTIMIZED_UPDATE_MANIFEST.json",
+    "README_OPTIMIZED_4090.md",
+    "cloud_opt.py",
+    "configs/cloud/optimized_repeat3_4090.yaml",
+    "configs/cloud/optimized_repeat3_aug_4090.yaml",
+    "optimized/build_rare_repeat_manifest.py",
+    "optimized/train.py"
+  ],
+  "zip_test": "pass",
+  "contains_dataset": false,
+  "contains_weights": false
+}

@@ -1,0 +1,36 @@
+{
+  "name": "recall97_candidate_20260904",
+  "objective": "recall-oriented official submission candidate",
+  "weights": "runs/local4060/baseline4060_full65_b1_noval_20260902/weights/best_original.pt",
+  "weights_sha256": "f47b10edafee66d05b6c051606651b1e6264884eacd3a42f51b98d8c3fc2430d",
+  "candidate_caches": [
+    "runs/optimization/recall98_test/plain_candidates.jsonl.gz",
+    "runs/optimization/recall98_test/tta_candidates.jsonl.gz"
+  ],
+  "action_file": "runs/optimization/recall98_nms050_milp/action_report.json",
+  "extra_actions": [
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, -0.1, 0.0],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.1, 0.0],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.0, -0.1],
+    ["mamianmakeng", "mamianmakeng", 1.0, 1.25, 0.0, 0.1]
+  ],
+  "pre_nms_iou": 0.5,
+  "final_nms_iou": 0.0,
+  "candidate_score_threshold": 0.000013,
+  "score_floor": 0.001,
+  "rounding": "nearest",
+  "frozen_dev_result": {
+    "true_positives": 605,
+    "ground_truth": 622,
+    "recall": 0.9726688102893891,
+    "proxy_score": 97.2668810289389,
+    "predictions": 4735626
+  },
+  "test_result": {
+    "images": 669,
+    "predictions": 6952585,
+    "submission_bytes": 837445827,
+    "zip_bytes": 63909088,
+    "zip_sha256": "05dc7427998e9e858872b2cc06aa658c08d32728a97aa9ce784ba972d035e781"
+  }
+}

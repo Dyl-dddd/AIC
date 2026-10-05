@@ -1,0 +1,44 @@
+{
+  "mean": {
+    "train_crop_median": 55.80436316873798,
+    "test_crop_median": 50.39672952576983,
+    "median_difference": -5.40763364296815,
+    "ks_statistic": 0.18666666666666668,
+    "ks_p_exploratory": 5.522790313356146e-05
+  },
+  "std": {
+    "train_crop_median": 13.118632950345127,
+    "test_crop_median": 9.287560972845617,
+    "median_difference": -3.8310719774995103,
+    "ks_statistic": 0.23333333333333334,
+    "ks_p_exploratory": 1.4252308715018679e-07
+  },
+  "local_contrast_median": {
+    "train_crop_median": 3.874182470665937,
+    "test_crop_median": 3.340570532835646,
+    "median_difference": -0.5336119378302913,
+    "ks_statistic": 0.12666666666666668,
+    "ks_p_exploratory": 0.01616247763682491
+  },
+  "laplacian_variance": {
+    "train_crop_median": 168.29125213623047,
+    "test_crop_median": 131.22075653076172,
+    "median_difference": -37.07049560546875,
+    "ks_statistic": 0.09666666666666666,
+    "ks_p_exploratory": 0.12122695053622792
+  },
+  "gradient_mean": {
+    "train_crop_median": 16.733959197998047,
+    "test_crop_median": 15.10040283203125,
+    "median_difference": -1.6335563659667969,
+    "ks_statistic": 0.09,
+    "ks_p_exploratory": 0.17609362474930004
+  },
+  "noise_mad": {
+    "train_crop_median": 7.0,
+    "test_crop_median": 6.0,
+    "median_difference": -1.0,
+    "ks_statistic": 0.06666666666666667,
+    "ks_p_exploratory": 0.5182685170344619
+  }
+}

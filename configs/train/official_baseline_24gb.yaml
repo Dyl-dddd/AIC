@@ -1,0 +1,20 @@
+train:
+  data: /workspace/data/official_yolo_clean/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: runs/gc10/p2_focal_pretrain/weights/best.pt
+  loss: bce
+  epochs: 150
+  imgsz: 1024
+  batch: 6
+  device: "0"
+  workers: 8
+  project: runs/steel
+  name: official_p2_bce
+  cache: disk
+  patience: 35
+  optimizer: AdamW
+  lr0: 0.002
+  lrf: 0.01
+  close_mosaic: 15
+  deterministic: true
+  save_period: 10

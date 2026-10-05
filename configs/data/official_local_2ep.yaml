@@ -1,0 +1,19 @@
+prepare:
+  source: D:/全球人工智能算法/data/official/train
+  output: D:/全球人工智能算法/data/official_yolo_hybrid_local
+  classes: official
+  tile_size: 1024
+  overlap: 0.25
+  val_ratio: 0.15
+  calibration_ratio: 0.10
+  split_trials: 6000
+  negative_ratio: 0.35
+  rare_repeat_cap: 3.0
+  min_visibility: 0.35
+  seed: 42
+  workers: 4
+  deblur: false
+  deblur_threshold: 85.0
+  clahe: false
+  view_mode: both
+  global_size: 1024

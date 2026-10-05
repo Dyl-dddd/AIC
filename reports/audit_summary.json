@@ -1,0 +1,35 @@
+{
+  "train_scanned": 3200,
+  "test_scanned": 788,
+  "train_files": 3200,
+  "train_xml_files": 3200,
+  "test_files": 788,
+  "missing_xml": [],
+  "orphan_xml": [],
+  "empty_images": 1074,
+  "box_count": 5889,
+  "class_counts": {
+    "zonglie": 473,
+    "jiaza": 220,
+    "mamianmakeng": 2436,
+    "yanghuatiepi": 492,
+    "gunyin": 253,
+    "yiwuyaru": 603,
+    "jieba": 1190,
+    "qilie": 69,
+    "huashang": 153
+  },
+  "source_counts": {
+    "numeric": 1952,
+    "C": 1248
+  },
+  "test_shape_counts": {
+    "1387x1516": 300,
+    "4096x3000": 488
+  },
+  "issue_counts": {
+    "duplicate_box_exact": 4
+  },
+  "duplicate_hash_groups": 163,
+  "split_seed": 20261014
+}

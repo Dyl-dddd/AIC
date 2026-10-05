@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "purpose": "membership-preserving nonlinear score ranking",
+  "deployment": {
+    "model_file": "models/v10_nonlinear_ranker.ubj",
+    "model_sha256": "62d992a5c6823e2139ddd22aa647f898741fb2aac1738212b7db96659a78260b",
+    "feature_set": "nonlinear_vf_v9",
+    "feature_names": [
+      "log_base_score",
+      "vf_present",
+      "vf_iou",
+      "log_vf_score",
+      "vf_log_advantage",
+      "p1_present",
+      "p1_iou",
+      "log_p1_score",
+      "p1_log_advantage",
+      "p2_present",
+      "p2_iou",
+      "log_p2_score",
+      "p2_log_advantage",
+      "log_width_ratio",
+      "log_height_ratio",
+      "log_area_ratio",
+      "log_aspect",
+      "center_x",
+      "center_y",
+      "edge_distance",
+      "image_rank",
+      "image_class_rank",
+      "log_image_count",
+      "log_image_class_count",
+      "class_jieba",
+      "class_zonglie",
+      "class_jiaza",
+      "class_yiwuyaru",
+      "class_huashang",
+      "class_mamianmakeng",
+      "class_yanghuatiepi",
+      "class_gunyin"
+    ],
+    "blend": 0.75,
+    "xgboost_version": "3.4.1"
+  },
+  "protected_membership": "V7 primary",
+  "match_floor": 0.5,
+  "checkpoint_sha256": {
+    "varifocal": "4228f473d7618275e6c7efea6ad28118a6da2d2a2c9d8422298fd0078430a4f6",
+    "v9_p1": "9a4ad2b8fe5489e1e5aa89a4ba377afc57ec85f8e29aa19b0efb307b4f20ef68",
+    "v9_p2": "224153cc092f88ffed4043c401a2ce0d545726e47b45301dab66fc85f2f3f846"
+  },
+  "development_oof": {
+    "group_folds": 5,
+    "weighted_delta_vs_v7": 0.361968,
+    "original_delta_vs_v7": 0.396819,
+    "grid_crops_delta_vs_v7": 0.305277,
+    "release_gate_passed": true,
+    "warning": "Frozen-development OOF evidence is not an official leaderboard guarantee."
+  }
+}

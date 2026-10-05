@@ -1,0 +1,18 @@
+train:
+  data: /workspace/data/gc10_yolo/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: yolo11s.pt
+  loss: focal
+  epochs: 80
+  imgsz: 768
+  batch: 12
+  device: "0"
+  workers: 8
+  project: runs/gc10
+  name: p2_focal_pretrain
+  cache: disk
+  patience: 20
+  lr0: 0.003
+  deterministic: true
+  save_period: 10
+

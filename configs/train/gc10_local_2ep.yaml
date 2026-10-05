@@ -1,0 +1,23 @@
+train:
+  data: D:/全球人工智能算法/data/gc10_yolo_2ep/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  pretrained: yolo11s.pt
+  loss: focal
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  epochs: 2
+  imgsz: 768
+  batch: 1
+  device: "0"
+  workers: 4
+  project: runs/gc10
+  name: p2_focal_2ep_local
+  cache: disk
+  patience: 2
+  optimizer: AdamW
+  lr0: 0.003
+  deterministic: true
+  val: true
+  plots: true
+  save_period: 1
+  exist_ok: false

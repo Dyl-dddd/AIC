@@ -1,0 +1,38 @@
+{
+  "format": "iron-code-only-update-v1",
+  "destination": "/mnt/proj/iron",
+  "contains_dataset": false,
+  "contains_weights": false,
+  "files": [
+    {
+      "path": "README_OPTIMIZED_4090.md",
+      "size": 3332,
+      "sha256": "0ed240a26cfd9ecd9a828f47ccdaa8fa778c21d005d54c8aa3c5f0bc216efe6b"
+    },
+    {
+      "path": "cloud_opt.py",
+      "size": 9222,
+      "sha256": "f62474458cb3b6f60df15262006200e1e559ebe6e0ce83559c7a4d5537a97ee5"
+    },
+    {
+      "path": "configs/cloud/optimized_repeat3_4090.yaml",
+      "size": 786,
+      "sha256": "b3a48cb99a83a7fd41c913a79b242acea9668cc877483c43e268986d7b58e109"
+    },
+    {
+      "path": "configs/cloud/optimized_repeat3_aug_4090.yaml",
+      "size": 807,
+      "sha256": "cedc952c8e06094afd1fb7817d4e1940f46d702975e1f11afc9bdabeb9fafd43"
+    },
+    {
+      "path": "optimized/build_rare_repeat_manifest.py",
+      "size": 4412,
+      "sha256": "201a1a9023990a6ba7c0f19909e1a5643ec9871c851199825b58ea2541b7cf47"
+    },
+    {
+      "path": "optimized/train.py",
+      "size": 1544,
+      "sha256": "7ab24d814901546ed97bbcbd7812493fda8af908ee76d8cd2bb55a8b7d71556d"
+    }
+  ]
+}

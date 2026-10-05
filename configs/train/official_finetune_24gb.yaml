@@ -1,0 +1,25 @@
+train:
+  data: /workspace/data/steel_yolo/steel_defect.yaml
+  model: configs/yolo11s-p2.yaml
+  # Replace with the best GC10 checkpoint after pretraining. The 10-class head
+  # is skipped automatically while matching backbone/neck weights are loaded.
+  pretrained: runs/gc10/p2_focal_pretrain/weights/best.pt
+  loss: focal
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  epochs: 150
+  imgsz: 1024
+  batch: 6
+  device: "0"
+  workers: 8
+  project: runs/steel
+  name: official_p2_focal
+  cache: disk
+  patience: 35
+  optimizer: AdamW
+  lr0: 0.002
+  lrf: 0.01
+  close_mosaic: 15
+  deterministic: true
+  save_period: 10
+
