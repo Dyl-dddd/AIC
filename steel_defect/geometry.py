@@ -93,6 +93,32 @@ def generate_grid_tiles(
     ]
 
 
+def generate_strip_tiles(
+    width: int,
+    height: int,
+    strip_width: int,
+    overlap: float,
+) -> list[Tile]:
+    """Full-height vertical strips sliding along x.
+
+    Long defects such as zonglie lose their complete vertical extent when a
+    1024-px square tile can only show a fragment; the fragment localization
+    then lands below IoU 0.5. A strip keeps the full image height at native
+    resolution and trades horizontal field of view for it. Horizontal
+    positions follow the same overlap policy as square tiles, so strips and
+    square tiles can be mixed inside one dataset or one inference pass.
+    """
+    if strip_width <= 0:
+        raise ValueError("strip_width must be positive")
+    if not 0.0 <= overlap < 1.0:
+        raise ValueError("overlap must be in [0, 1)")
+    xs = _positions(width, strip_width, overlap)
+    return [
+        Tile(x, 0, min(strip_width, width - x), height, width, height)
+        for x in xs
+    ]
+
+
 def clip_box_to_tile(
     box: Iterable[float],
     tile: Tile,
