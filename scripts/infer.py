@@ -96,6 +96,13 @@ def main() -> None:
     parser.add_argument("--edge-margin", type=int, default=12)
     parser.add_argument("--edge-penalty", type=float, default=1.0)
     parser.add_argument("--global-pass", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(
+        "--strip-pass", action=argparse.BooleanOptionalAction, default=False,
+        help="Add full-height strip views (long-defect context) to the candidate set",
+    )
+    parser.add_argument("--strip-width", type=int, default=810)
+    parser.add_argument("--strip-overlap", type=float, default=0.2)
+    parser.add_argument("--strip-imgsz", type=int, default=0, help="Strip-view inference size; 0 reuses --imgsz")
     parser.add_argument("--merge", choices=("nms", "wbf"), default="nms")
     parser.add_argument("--max-det", type=int, default=1000)
     parser.add_argument("--thresholds", type=Path, help="Per-class threshold JSON from eval.py")
@@ -126,6 +133,8 @@ def main() -> None:
         tta=args.tta, deblur=args.deblur, deblur_threshold=args.deblur_threshold,
         clahe=args.clahe, edge_margin=args.edge_margin,
         edge_penalty=args.edge_penalty, global_pass=args.global_pass, merge=args.merge,
+        strip_pass=args.strip_pass, strip_width=args.strip_width,
+        strip_overlap=args.strip_overlap, strip_imgsz=args.strip_imgsz,
         max_det=args.max_det, class_thresholds=load_thresholds(args.thresholds),
     )
     image_paths = sorted(
@@ -163,6 +172,8 @@ def main() -> None:
                 "batch": args.batch, "conf": args.conf, "local_iou": args.local_iou,
                 "device": str(args.device), "half": half, "tta": args.tta,
                 "deblur": args.deblur, "clahe": args.clahe, "global_pass": args.global_pass,
+                "strip_pass": args.strip_pass, "strip_width": args.strip_width,
+                "strip_overlap": args.strip_overlap, "strip_imgsz": args.strip_imgsz,
                 "max_det": args.max_det,
             },
         }
