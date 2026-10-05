@@ -102,12 +102,20 @@ def main() -> None:
     )
     parser.add_argument("--strip-width", type=int, default=810)
     parser.add_argument("--strip-overlap", type=float, default=0.2)
-    parser.add_argument("--strip-imgsz", type=int, default=0, help="Strip-view inference size; 0 reuses --imgsz")
+    parser.add_argument(
+        "--strip-imgsz", type=int, default=1536,
+        help="Strip-view inference size (default 1536 per the V25 spec; 0 reuses --imgsz). "
+             "Vertical 1:1 fidelity requires strip_imgsz >= strip height",
+    )
     parser.add_argument("--merge", choices=("nms", "wbf"), default="nms")
     parser.add_argument("--max-det", type=int, default=1000)
     parser.add_argument("--thresholds", type=Path, help="Per-class threshold JSON from eval.py")
     parser.add_argument("--cache-only", action="store_true", help="Write raw candidates as streaming JSONL gzip instead of a submission")
-    parser.add_argument("--candidate-cache", type=Path, default=Path("raw_candidates.jsonl.gz"))
+    parser.add_argument(
+        "--candidate-cache", type=Path, default=Path("raw_candidates.jsonl.gz"),
+        help="Streaming candidate cache (.jsonl.gz, header + per-image rows; "
+             "not interchangeable with eval.py's .json/.json.gz cache)",
+    )
     args = apply_profile_defaults(parser, "infer")
     if args.weights is None or args.source is None:
         parser.error("--weights and --source are required (directly or through --config)")
