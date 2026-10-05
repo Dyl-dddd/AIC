@@ -46,7 +46,7 @@ class InferenceOptions:
     strip_pass: bool = False
     strip_width: int = 810
     strip_overlap: float = 0.2
-    strip_imgsz: int = 0
+    strip_imgsz: int = 1536
 
     def __post_init__(self) -> None:
         if self.tile_layout not in {"sliding", "semifinal_grid"}:

@@ -63,7 +63,11 @@ def main() -> None:
     )
     parser.add_argument("--strip-width", type=int, default=810)
     parser.add_argument("--strip-overlap", type=float, default=0.2)
-    parser.add_argument("--strip-imgsz", type=int, default=0, help="Strip-view inference size; 0 reuses --imgsz")
+    parser.add_argument(
+        "--strip-imgsz", type=int, default=1536,
+        help="Strip-view inference size (default 1536 per the V25 spec; 0 reuses --imgsz). "
+             "Vertical 1:1 fidelity requires strip_imgsz >= strip height",
+    )
     parser.add_argument("--edge-margin", type=int, default=12)
     parser.add_argument("--edge-penalty", type=float, default=1.0)
     parser.add_argument("--merge", choices=("nms", "wbf"), default="nms")
@@ -71,7 +75,11 @@ def main() -> None:
     parser.add_argument("--beta", type=float, default=2.0)
     parser.add_argument("--thresholds", type=Path, help="Fixed per-class thresholds from calibration")
     parser.add_argument("--tune-thresholds", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--candidate-cache", type=Path, help="Raw per-view candidate cache (.json or .json.gz)")
+    parser.add_argument(
+        "--candidate-cache", type=Path,
+        help="Raw per-view candidate cache (.json or .json.gz; {signature, images} format; "
+             "not interchangeable with infer.py's streaming .jsonl.gz cache)",
+    )
     parser.add_argument("--reuse-candidates", action="store_true", help="Skip network inference and replay the cache")
     parser.add_argument("--cache-only", action="store_true", help="Run model views and save raw candidates without merge/metrics")
     parser.add_argument("--limit", type=int, default=0, help="Smoke-test only; 0 evaluates the complete split")
