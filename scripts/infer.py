@@ -96,11 +96,26 @@ def main() -> None:
     parser.add_argument("--edge-margin", type=int, default=12)
     parser.add_argument("--edge-penalty", type=float, default=1.0)
     parser.add_argument("--global-pass", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(
+        "--strip-pass", action=argparse.BooleanOptionalAction, default=False,
+        help="Add full-height strip views (long-defect context) to the candidate set",
+    )
+    parser.add_argument("--strip-width", type=int, default=810)
+    parser.add_argument("--strip-overlap", type=float, default=0.2)
+    parser.add_argument(
+        "--strip-imgsz", type=int, default=1536,
+        help="Strip-view inference size (default 1536 per the V25 spec; 0 reuses --imgsz). "
+             "Vertical 1:1 fidelity requires strip_imgsz >= strip height",
+    )
     parser.add_argument("--merge", choices=("nms", "wbf"), default="nms")
     parser.add_argument("--max-det", type=int, default=1000)
     parser.add_argument("--thresholds", type=Path, help="Per-class threshold JSON from eval.py")
     parser.add_argument("--cache-only", action="store_true", help="Write raw candidates as streaming JSONL gzip instead of a submission")
-    parser.add_argument("--candidate-cache", type=Path, default=Path("raw_candidates.jsonl.gz"))
+    parser.add_argument(
+        "--candidate-cache", type=Path, default=Path("raw_candidates.jsonl.gz"),
+        help="Streaming candidate cache (.jsonl.gz, header + per-image rows; "
+             "not interchangeable with eval.py's .json/.json.gz cache)",
+    )
     args = apply_profile_defaults(parser, "infer")
     if args.weights is None or args.source is None:
         parser.error("--weights and --source are required (directly or through --config)")
@@ -126,6 +141,8 @@ def main() -> None:
         tta=args.tta, deblur=args.deblur, deblur_threshold=args.deblur_threshold,
         clahe=args.clahe, edge_margin=args.edge_margin,
         edge_penalty=args.edge_penalty, global_pass=args.global_pass, merge=args.merge,
+        strip_pass=args.strip_pass, strip_width=args.strip_width,
+        strip_overlap=args.strip_overlap, strip_imgsz=args.strip_imgsz,
         max_det=args.max_det, class_thresholds=load_thresholds(args.thresholds),
     )
     image_paths = sorted(
@@ -163,6 +180,8 @@ def main() -> None:
                 "batch": args.batch, "conf": args.conf, "local_iou": args.local_iou,
                 "device": str(args.device), "half": half, "tta": args.tta,
                 "deblur": args.deblur, "clahe": args.clahe, "global_pass": args.global_pass,
+                "strip_pass": args.strip_pass, "strip_width": args.strip_width,
+                "strip_overlap": args.strip_overlap, "strip_imgsz": args.strip_imgsz,
                 "max_det": args.max_det,
             },
         }

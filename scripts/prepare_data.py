@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from steel_defect.classes import CLASS_NAMES
 from steel_defect.deblur import adaptive_deblur, apply_clahe
-from steel_defect.geometry import clip_box_to_tile, generate_grid_tiles, generate_tiles, xyxy_to_yolo
+from steel_defect.geometry import clip_box_to_tile, generate_grid_tiles, generate_strip_tiles, generate_tiles, xyxy_to_yolo
 from steel_defect.image_io import imread, imwrite
 from steel_defect.runtime import apply_profile_defaults
 from steel_defect.voc import VocRecord, discover_class_names, discover_pairs, parse_voc
@@ -151,6 +151,7 @@ def save_tile(
     clahe: bool,
     deblur_threshold: float,
     view_tag: str | None = None,
+    is_strip: bool = False,
 ) -> dict:
     crop = image[tile.y : tile.y + tile.height, tile.x : tile.x + tile.width]
     blur_meta = {"applied": False, "blur_score": None, "strength": 0.0}
@@ -188,6 +189,7 @@ def save_tile(
         "class_ids": sorted({class_id for class_id, _ in annotations}),
         "is_repeat": False,
         "is_global": False,
+        "is_strip": is_strip,
         "deblur": blur_meta,
     }
 
@@ -311,7 +313,7 @@ def process_record(record: VocRecord, split: str, args, class_names: list[str]) 
     if args.view_mode != "global":
         tile_layout = getattr(args, "tile_layout", "sliding")
         tile_groups = []
-        if tile_layout in {"sliding", "both"}:
+        if tile_layout in {"sliding", "both", "sliding_strips"}:
             tile_groups.append((
                 "sliding",
                 generate_tiles(record.width, record.height, args.tile_size, args.overlap),
@@ -323,6 +325,14 @@ def process_record(record: VocRecord, split: str, args, class_names: list[str]) 
                     record.width, record.height,
                     getattr(args, "tile_width", 1387), getattr(args, "tile_height", 1516),
                     getattr(args, "grid_rows", 2), getattr(args, "grid_cols", 3),
+                ),
+            ))
+        if tile_layout in {"strips", "sliding_strips"}:
+            tile_groups.append((
+                "strips",
+                generate_strip_tiles(
+                    record.width, record.height,
+                    getattr(args, "strip_width", 810), getattr(args, "strip_overlap", 0.2),
                 ),
             ))
         for layout_name, tiles in tile_groups:
@@ -352,14 +362,17 @@ def process_record(record: VocRecord, split: str, args, class_names: list[str]) 
             rng.shuffle(negative)
             selected = positive + negative[:max_negative]
             selected.sort(key=lambda item: (item[0].y, item[0].x))
-            view_tag = None if tile_layout == "sliding" else (
-                "grid2x3" if layout_name == "semifinal_grid" else f"slide{args.tile_size}"
-            )
+            if layout_name == "semifinal_grid":
+                view_tag = "grid2x3"
+            elif layout_name == "strips":
+                view_tag = f"strip{getattr(args, 'strip_width', 810)}"
+            else:
+                view_tag = None if tile_layout == "sliding" else f"slide{args.tile_size}"
             for tile, annotations in selected:
                 metadata.append(
                     save_tile(
                         image, record, tile, annotations, args.output, split, args.deblur, args.clahe,
-                        args.deblur_threshold, view_tag=view_tag,
+                        args.deblur_threshold, view_tag=view_tag, is_strip=(layout_name == "strips"),
                     )
                 )
                 for class_id, _ in annotations:
@@ -386,13 +399,24 @@ def main() -> None:
     parser.add_argument("--tile-size", type=int, default=1024)
     parser.add_argument("--overlap", type=float, default=0.25)
     parser.add_argument(
-        "--tile-layout", choices=("sliding", "semifinal_grid", "both"), default="sliding",
-        help="Square sliding tiles, the observed semifinal 2x3 crop grid, or both",
+        "--tile-layout",
+        choices=("sliding", "semifinal_grid", "both", "strips", "sliding_strips"),
+        default="sliding",
+        help="Square sliding tiles, the observed semifinal 2x3 crop grid, "
+             "full-height strips (long-defect context), or combined layouts",
     )
     parser.add_argument("--tile-width", type=int, default=1387)
     parser.add_argument("--tile-height", type=int, default=1516)
     parser.add_argument("--grid-rows", type=int, default=2)
     parser.add_argument("--grid-cols", type=int, default=3)
+    parser.add_argument(
+        "--strip-width", type=int, default=810,
+        help="Width of each full-height training strip in pixels",
+    )
+    parser.add_argument(
+        "--strip-overlap", type=float, default=0.2,
+        help="Horizontal overlap between adjacent full-height strips",
+    )
     parser.add_argument("--val-ratio", type=float, default=0.20)
     parser.add_argument(
         "--calibration-ratio", type=float, default=0.0,
@@ -553,6 +577,8 @@ def main() -> None:
             "tile_height": args.tile_height,
             "grid_rows": args.grid_rows,
             "grid_cols": args.grid_cols,
+            "strip_width": args.strip_width,
+            "strip_overlap": args.strip_overlap,
             "calibration_ratio": args.calibration_ratio,
             "negative_ratio": args.negative_ratio,
             "rare_repeat_cap": args.rare_repeat_cap,
@@ -593,7 +619,9 @@ def main() -> None:
         },
         "repeated_train_tiles": sum(bool(item["is_repeat"]) for item in metadata),
         "global_views": sum(bool(item.get("is_global", False)) for item in metadata),
+        "strip_views": sum(bool(item.get("is_strip", False)) for item in metadata),
         "train_global_views": sum(item["split"] == "train" and bool(item.get("is_global", False)) for item in metadata),
+        "train_strip_views": sum(item["split"] == "train" and bool(item.get("is_strip", False)) for item in metadata),
         "train_crop_views": sum(item["split"] == "train" and not bool(item.get("is_global", False)) for item in metadata),
         "global_repeat": args.global_repeat,
         "view_mode": args.view_mode,

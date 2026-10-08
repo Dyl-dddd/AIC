@@ -57,6 +57,17 @@ def main() -> None:
     parser.add_argument("--deblur-threshold", type=float, default=85.0)
     parser.add_argument("--clahe", action="store_true")
     parser.add_argument("--global-pass", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(
+        "--strip-pass", action=argparse.BooleanOptionalAction, default=False,
+        help="Add full-height strip views (long-defect context) to the candidate set",
+    )
+    parser.add_argument("--strip-width", type=int, default=810)
+    parser.add_argument("--strip-overlap", type=float, default=0.2)
+    parser.add_argument(
+        "--strip-imgsz", type=int, default=1536,
+        help="Strip-view inference size (default 1536 per the V25 spec; 0 reuses --imgsz). "
+             "Vertical 1:1 fidelity requires strip_imgsz >= strip height",
+    )
     parser.add_argument("--edge-margin", type=int, default=12)
     parser.add_argument("--edge-penalty", type=float, default=1.0)
     parser.add_argument("--merge", choices=("nms", "wbf"), default="nms")
@@ -64,7 +75,11 @@ def main() -> None:
     parser.add_argument("--beta", type=float, default=2.0)
     parser.add_argument("--thresholds", type=Path, help="Fixed per-class thresholds from calibration")
     parser.add_argument("--tune-thresholds", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--candidate-cache", type=Path, help="Raw per-view candidate cache (.json or .json.gz)")
+    parser.add_argument(
+        "--candidate-cache", type=Path,
+        help="Raw per-view candidate cache (.json or .json.gz; {signature, images} format; "
+             "not interchangeable with infer.py's streaming .jsonl.gz cache)",
+    )
     parser.add_argument("--reuse-candidates", action="store_true", help="Skip network inference and replay the cache")
     parser.add_argument("--cache-only", action="store_true", help="Run model views and save raw candidates without merge/metrics")
     parser.add_argument("--limit", type=int, default=0, help="Smoke-test only; 0 evaluates the complete split")
@@ -103,6 +118,14 @@ def main() -> None:
                    "edge_penalty", "merge", "max_det", "beta")
     evaluation_policy = {key: getattr(args, key) for key in policy_keys}
     evaluation_policy["class_thresholds"] = class_thresholds
+    if args.strip_pass:
+        # Conditional so that existing frozen policies without strip views
+        # keep verifying; an enabled strip pass is part of the policy.
+        evaluation_policy["strip_views"] = {
+            "strip_width": args.strip_width,
+            "strip_overlap": args.strip_overlap,
+            "strip_imgsz": args.strip_imgsz or args.imgsz,
+        }
     freeze = read_json(args.freeze_manifest) if args.freeze_manifest else None
     check_evaluation_scope(manifest, args.split,
         [r.image_path.relative_to(args.source).as_posix() for r in records],
@@ -126,6 +149,8 @@ def main() -> None:
         tta=args.tta, deblur=args.deblur, deblur_threshold=args.deblur_threshold,
         clahe=args.clahe, edge_margin=args.edge_margin, edge_penalty=args.edge_penalty,
         global_pass=args.global_pass,
+        strip_pass=args.strip_pass, strip_width=args.strip_width,
+        strip_overlap=args.strip_overlap, strip_imgsz=args.strip_imgsz,
         merge=args.merge, max_det=args.max_det,
     )
 
@@ -154,6 +179,13 @@ def main() -> None:
         "global_pass": args.global_pass,
         "max_det": args.max_det,
     }
+    if args.strip_pass:
+        # Only extended runs change the signature; non-strip caches stay valid.
+        generation_signature["strip_views"] = {
+            "strip_width": args.strip_width,
+            "strip_overlap": args.strip_overlap,
+            "strip_imgsz": args.strip_imgsz or args.imgsz,
+        }
     cached_images: dict[str, dict] = {}
     model = None
     if args.reuse_candidates:

@@ -16,6 +16,7 @@ from .geometry import (
     edge_score_factor,
     generate_tiles,
     generate_grid_tiles,
+    generate_strip_tiles,
 )
 from .image_io import imread
 
@@ -42,6 +43,10 @@ class InferenceOptions:
     max_det: int = 1000
     class_thresholds: dict[str, float] = field(default_factory=dict)
     tile_layout: str = "sliding"
+    strip_pass: bool = False
+    strip_width: int = 810
+    strip_overlap: float = 0.2
+    strip_imgsz: int = 1536
 
     def __post_init__(self) -> None:
         if self.tile_layout not in {"sliding", "semifinal_grid"}:
@@ -56,6 +61,12 @@ class InferenceOptions:
             raise ValueError("edge_penalty must be in [0, 1]")
         if self.deblur_threshold <= 0:
             raise ValueError("deblur_threshold must be positive")
+        if self.strip_width <= 0:
+            raise ValueError("strip_width must be positive")
+        if not 0.0 <= self.strip_overlap < 1.0:
+            raise ValueError("strip_overlap must be in [0, 1)")
+        if self.strip_imgsz < 0:
+            raise ValueError("strip_imgsz must be non-negative (0 reuses imgsz)")
 
 
 def _enhance(image: np.ndarray, options: InferenceOptions) -> np.ndarray:
@@ -92,12 +103,14 @@ def _append_results(results, views, detections, options: InferenceOptions) -> No
             )
 
 
-def _flush(model, images, views, detections, options: InferenceOptions) -> None:
+def _flush(
+    model, images, views, detections, options: InferenceOptions, imgsz: int | None = None
+) -> None:
     if not images:
         return
     results = model.predict(
         source=images,
-        imgsz=options.imgsz,
+        imgsz=options.imgsz if imgsz is None else imgsz,
         conf=options.conf,
         iou=options.local_iou,
         device=options.device,
@@ -149,6 +162,23 @@ def predict_candidates_array(
         batch_views.append((tile, 1.0, 1.0, False))
         if len(batch_images) >= options.batch:
             _flush(model, batch_images, batch_views, detections, options)
+
+    if options.strip_pass:
+        # Full-height strips add long-defect context that square tiles cannot
+        # provide. Flush the square-tile remainder first: strips may run at a
+        # different imgsz and must not be batched with square tiles.
+        _flush(model, batch_images, batch_views, detections, options)
+        strip_imgsz = options.strip_imgsz or options.imgsz
+        for tile in generate_strip_tiles(
+            width, height, options.strip_width, options.strip_overlap
+        ):
+            crop = image[tile.y : tile.y + tile.height, tile.x : tile.x + tile.width]
+            crop = cv2.cvtColor(_enhance(crop, options), cv2.COLOR_GRAY2BGR)
+            batch_images.append(crop)
+            batch_views.append((tile, 1.0, 1.0, False))
+            if len(batch_images) >= options.batch:
+                _flush(model, batch_images, batch_views, detections, options, imgsz=strip_imgsz)
+        _flush(model, batch_images, batch_views, detections, options, imgsz=strip_imgsz)
 
     if options.global_pass:
         scale = min(1.0, options.imgsz / max(width, height))
