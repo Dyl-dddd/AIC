@@ -7,7 +7,6 @@ from pathlib import Path
 import time
 from copy import deepcopy
 
-import torch
 import yaml
 
 from .governance import digest_file
@@ -64,6 +63,8 @@ def training_code_signature(root):
 
 
 def cuda_witness(seed=42):
+    import torch
+
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA unavailable; refusing silent CPU training")
     torch.manual_seed(seed)
@@ -111,6 +112,8 @@ class OptimizerAudit:
         self.updates += 1
 
     def batch(self, trainer):
+        import torch
+
         self.microbatches += 1
         if not torch.isfinite(trainer.loss).all():
             raise FloatingPointError("Non-finite training loss; learning gate failed")
@@ -141,6 +144,7 @@ class OptimizerAudit:
 
 def audit_initial_transfer(trainer, public_weights):
     """Compare the final nc-adjusted training model against public weights once."""
+    import torch
     from ultralytics import YOLO
     reference = YOLO(str(public_weights)).model.float().cpu().state_dict()
     target = trainer.model.state_dict()
@@ -165,6 +169,8 @@ def audit_initial_transfer(trainer, public_weights):
 
 def save_raw_diagnostic_checkpoint(trainer):
     """Keep the last non-EMA model for normalization/EMA diagnosis, not submission."""
+    import torch
+
     model = deepcopy(trainer.model).float().cpu()
     if hasattr(model, "criterion"):
         delattr(model, "criterion")
@@ -175,6 +181,8 @@ def save_raw_diagnostic_checkpoint(trainer):
 
 def freeze_bn_statistics(model):
     """Freeze running moments only; affine weights remain trainable."""
+    import torch
+
     for module in model.modules():
         if isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
             module.eval()
